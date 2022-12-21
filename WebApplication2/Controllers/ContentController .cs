@@ -16,6 +16,7 @@ namespace WebApplication2.Controllers
         public IActionResult insertContent([FromBody] ContentModel model)
         {
             var result = new APIResponseModel<Articletable>();
+
             Articletable data = new Articletable();
             data.PostContent = model.PostContent;
             data.PostAccount = model.PostAccount;

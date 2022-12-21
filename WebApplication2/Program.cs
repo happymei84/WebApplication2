@@ -7,6 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000");
+            policy.WithMethods("*");
+            policy.WithHeaders("*");
+        });
+});
 builder.Services.AddDbContext<LoginContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("LoginDB")));
 var app = builder.Build();
 
@@ -23,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -15,6 +15,8 @@ public partial class LoginContext : DbContext
     {
     }
 
+    public virtual DbSet<Articletable> Articletables { get; set; }
+
     public virtual DbSet<Logintable> Logintables { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,6 +25,29 @@ public partial class LoginContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Articletable>(entity =>
+        {
+            entity.HasKey(e => e.RowId).HasName("PK__articlet__6965AB57F8C0A0D0");
+
+            entity.ToTable("articletable");
+
+            entity.Property(e => e.RowId).HasColumnName("row_id");
+            entity.Property(e => e.PostAccount)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Post_Account");
+            entity.Property(e => e.PostContent)
+                .IsUnicode(false)
+                .HasColumnName("Post_Content");
+            entity.Property(e => e.PostDatetime)
+                .HasColumnType("datetime")
+                .HasColumnName("Post_Datetime");
+            entity.Property(e => e.PostTitle)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("Post_Title");
+        });
+
         modelBuilder.Entity<Logintable>(entity =>
         {
             entity.HasKey(e => e.RowId);

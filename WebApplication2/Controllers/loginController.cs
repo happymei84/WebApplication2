@@ -35,19 +35,18 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost]
-        public IActionResult login(RegisterModel data)
+        public IActionResult login([FromBody]RegisterModel data)
         {
             
            var loginEnd = _loginContext.Logintables.Where(w => data.Account == w.Account && data.Password == w.Password).ToList();//把where拿掉很多比
            if(loginEnd.Count > 0)
             {
-                  return RedirectToAction("home",data);
+                return Ok(true);
             }
            else
             {
-                TempData["message"] = "您的帳號/密碼打錯嚕!";
-               // ViewBag.message = "您的帳號/密碼打錯嚕!";
-                return View("loginIndex");
+                
+                return Ok(false);
             }
           
         }

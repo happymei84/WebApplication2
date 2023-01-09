@@ -46,5 +46,33 @@ namespace WebApplication2.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public IActionResult SearchFunction(string model)
+        {
+            var result = new APIResponseModel<List<Articletable>>();
+
+            var compare = _loginContext.Articletables.Where(w => w.PostTitle.Contains(model)).ToList();
+
+            if (compare.Count > 0)
+            {
+                result.SusseccStatus = true;
+                result.ReturnData = compare;
+                result.ReturnMessage = "success";
+            }
+            else
+            {
+                result.SusseccStatus = false;
+                result.ReturnData = compare;
+                result.ReturnMessage = "fail";
+            }
+
+
+
+
+            return Ok(result);
+        }
+
+
+
     }
 }
